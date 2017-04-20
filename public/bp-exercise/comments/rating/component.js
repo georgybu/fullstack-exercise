@@ -1,10 +1,19 @@
 function RatingController($scope, CommentsService) {
-  const vm = this;
-  const UPDATE_RATING_EVENT = 'update-component-rating';
   let tmpValue = null;
   
-  vm.ratingOwner = 'avg';
-  vm.getRange = () => [1, 2, 3, 4, 5];
+  const vm = this;
+  const socket = bpExerciseApp.socket;
+  const UPDATE_RATING_EVENT = 'update-component-rating';
+  
+  const eventCallback = (data) => {
+    if (data.commentId === vm.commentId) {
+      // https://github.com/angular/angular.js/wiki/When-to-use-$scope.$apply()
+      $scope.$apply(function () {
+        vm.value = data.newRating;
+        vm.ratingOwner = 'ext';
+      });
+    }
+  };
   
   vm.SetRating = (newValue) => {
     vm.isLoading = true;
@@ -13,10 +22,10 @@ function RatingController($scope, CommentsService) {
       vm.value = newValue;
       vm.ratingOwner = 'me';
       vm.isLoading = false;
-      bpExerciseApp.socket.emit(UPDATE_RATING_EVENT, {
-        commentId: vm.commentId,
-        newRating: newValue
-      });
+      
+      const eventData = {commentId: vm.commentId, newRating: newValue};
+      socket.emit(UPDATE_RATING_EVENT, eventData);
+      
     });
   };
   
@@ -34,15 +43,16 @@ function RatingController($scope, CommentsService) {
     vm.isMove = false;
   };
   
-  bpExerciseApp.socket.on(UPDATE_RATING_EVENT, function (data) {
-    if (data.commentId === vm.commentId) {
-      // https://github.com/angular/angular.js/wiki/When-to-use-$scope.$apply()
-      $scope.$apply(function () {
-        vm.value = data.newRating;
-        vm.ratingOwner = 'ext';
-      });
-    }
-  });
+  vm.$onInit = function () {
+    vm.ratingOwner = 'avg';
+    vm.getRange = () => [1, 2, 3, 4, 5];
+    
+    socket.on(UPDATE_RATING_EVENT, eventCallback);
+  };
+  
+  vm.$onDestroy = function () {
+    socket.removeListener(UPDATE_RATING_EVENT, eventCallback);
+  };
   
 }
 
