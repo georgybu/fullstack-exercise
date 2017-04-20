@@ -1,0 +1,34 @@
+<div class="rating">
+    <div class="initial-state">
+
+        <div class="star-line">
+            <div class="bg">
+                <span class="star-gray" ng-repeat="rating in $ctrl.getRange()"
+                      ng-mouseover="$ctrl.setTempValue(rating)"
+                      ng-mouseleave="$ctrl.returnOriginValue()"
+                      ng-click="$ctrl.SetRating(rating)"></span>
+            </div>
+            <div class="active" ng-style="{ width: $ctrl.value * (100 / $ctrl.getRange().length) + '%'}">
+                <span class="star" ng-repeat="rating in $ctrl.getRange()"
+                      ng-mouseover="$ctrl.setTempValue(rating)"
+                      ng-mouseleave="$ctrl.returnOriginValue()"
+                      ng-click="$ctrl.SetRating(rating)"></span>
+            </div>
+        </div>
+
+        <span ng-if="!$ctrl.isLoading">
+            <span ng-if="!$ctrl.isMove">
+                <span ng-switch="$ctrl.ratingOwner">
+                    <span ng-switch-when="avg">average</span>
+                    <span ng-switch-when="me">my</span>
+                    <span ng-switch-when="ext">external updated</span>
+                    <span ng-switch-default>unknown</span>
+                </span>
+            </span>
+            <span>value: {{ $ctrl.value || 0 }}</span>
+        </span>
+        <span ng-if="$ctrl.isLoading">
+            Saving...
+        </span>
+    </div>
+</div>
