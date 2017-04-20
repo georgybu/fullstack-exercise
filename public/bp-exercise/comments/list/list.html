@@ -1,6 +1,9 @@
 <ul>
   <li ng-repeat='comment in $ctrl.comments'>
     <img gravatar-src-once="comment.email" />
-    <p>{{ comment.comment }}</p>
+    <p>
+      {{ comment.comment }}
+      <comments-rating comment-id="comment._id" value="comment.rating"></comments-rating>
+    </p>
   </li>
 </ul>

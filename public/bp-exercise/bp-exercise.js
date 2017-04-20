@@ -8,4 +8,6 @@ const bpExerciseApp = angular.module(APP_NAME, [
   'ui.gravatar'
 ]);
 
-bpExerciseApp.component('bpExercise', component)
+bpExerciseApp.component('bpExercise', component);
+
+bpExerciseApp.socket = io.connect('/');

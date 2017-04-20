@@ -1,0 +1,36 @@
+comments-rating {
+
+}
+
+comments-rating .star,
+comments-rating .star-gray {
+    background: transparent url("https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png") no-repeat center center;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: cover;
+    cursor: pointer;
+}
+
+comments-rating .star-gray {
+    filter: grayscale(100%);
+}
+
+comments-rating .star-line {
+    display: inline-block;
+    width: 100px;
+    position: relative;
+}
+
+comments-rating .bg {
+    display: inline-block;
+    width: 100px;
+}
+
+comments-rating .active {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
