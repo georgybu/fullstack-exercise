@@ -1,8 +1,9 @@
 bpExerciseApp.service('CommentsService', function($http) {
   this.List = () => {
-    return $http({
-      url: '/comments',
-      method: 'GET'
-    }).then((results) => results.data);
-  }
+    return $http.get('/comments').then((results) => results.data);
+  };
+  
+  this.SetRating = (commentId, newRating) => {
+    return $http.post('/ratings', {commentId, newRating});
+  };
 });
