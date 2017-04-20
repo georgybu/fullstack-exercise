@@ -20,7 +20,8 @@ Comment.count().then((count) => {
 function insert(comment) {
     const newComment = new Comment({ updatedAt: new Date(),
       comment: comment,
-      email: _.sample(names) + "@acme.com"
+      email: _.sample(names) + "@acme.com",
+      ratings: [2,3]
     })
     return newComment.save();
 }
