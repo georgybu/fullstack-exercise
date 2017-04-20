@@ -19,9 +19,6 @@ server.listen(app.get('port'), () => {
 
 io.on('connection', function (socket) {
   socket.on('update-component-rating', function (data) {
-    
-    console.log(data);
-    
     socket.broadcast.emit('update-component-rating', data);
   });
 });
